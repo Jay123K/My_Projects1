@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,10 +11,14 @@
 </head>
 
 <body>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<!-- 
+        <button class="btn btn-outline-primary me-md-2"><a href="/Login">Login</a></button>
+        <button class="btn btn-outline-primary"><a href="Register">Register</a></button> -->
+        <button class="btn btn-outline-primary"><a href="Logout">Logout</a></button>
 
-
-    <button type="submit" class="btn btn-success"><a href="{% url 'Login' %}"></a>Login</button>
-    <button type="submit" class="btn btn-success"><a href="{% url 'Register' %}"></a>Register</button>
+    
+    </div>
 
     {% block content %}
 

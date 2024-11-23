@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from django.views.generic.edit import DeleteView,UpdateView
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def Login_page(request):
@@ -14,7 +16,7 @@ def Login_page(request):
 
         if not User.objects.filter(username=username).exists():
             messages.info(request,'Invalid Username')
-            return redirect("/")
+            return redirect("Login")
     
         user=authenticate(username=username,password=password)
         if user is None:
@@ -24,6 +26,10 @@ def Login_page(request):
             return redirect("/")
         
     return render(request,'app1/Login_page.html')
+
+def Logout_page(request):
+    logout(request)
+    return redirect('Login')
 
 
 def Register_page(request):
@@ -55,12 +61,22 @@ def Register_page(request):
 def Home(request):
     return render(request,'app1/home.html')
 
-
+@login_required
 def StudentData(request):
     form=StudentForm()
     if request.method=="POST":
         form=StudentForm(request.POST)
         if form.is_valid():
             form.save()
+            form=StudentForm()
 
     return render(request,"app1/student_page.html",{'form':form})
+
+
+class UpdateStudent(UpdateView):
+    model=Student
+    template_name='app1/update_stu.html'
+
+class DeleteStudent(DeleteView):
+    model=Student
+    template_name='app1/delete_stu.html'
