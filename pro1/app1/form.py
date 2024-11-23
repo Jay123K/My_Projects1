@@ -3,7 +3,7 @@ from .models import Student
 
 class StudentForm(forms.ModelForm):
     class Meta:
-        models=Student
-        fields='__all__'
+        model=Student
+        fields="__all__"
 
         

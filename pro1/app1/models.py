@@ -5,12 +5,11 @@ from django.core.validators import MaxLengthValidator,MinLengthValidator,MaxValu
 # Create your models here.
 
 class Student(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=255)
     email=models.EmailField(unique=True,validators=[EmailValidator])
     age=models.IntegerField(validators=[MaxValueValidator(18),MinValueValidator(40)])
     marks=models.IntegerField(validators=[MaxValueValidator(100),MinValueValidator(0)])
-    address=models.TextField(max_length=255)
+    address=models.CharField(max_length=255)
 
     def __str__(self) -> str:
         return self.name
