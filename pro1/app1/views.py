@@ -3,6 +3,7 @@ from .models import Student
 from .form import StudentForm
 from django.contrib.auth.models import User
 from django.views.generic.edit import DeleteView,UpdateView
+from django.views.generic.list import ListView
 from django.contrib.auth import authenticate,logout,login
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -61,7 +62,8 @@ def Register_page(request):
 def Home(request):
     return render(request,'app1/home.html')
 
-@login_required
+
+@login_required(login_url='Login')    # Here use decorators login_required  and pass login_url as  parameter
 def StudentData(request):
     form=StudentForm()
     if request.method=="POST":
@@ -73,10 +75,18 @@ def StudentData(request):
     return render(request,"app1/student_page.html",{'form':form})
 
 
+class studentList(ListView):
+    model=Student
+    template_name='app1/List_stu.html'
+
+
 class UpdateStudent(UpdateView):
     model=Student
+    fields="__all__"
     template_name='app1/update_stu.html'
+    success_url="/"
 
 class DeleteStudent(DeleteView):
     model=Student
     template_name='app1/delete_stu.html'
+    success_url='/'
